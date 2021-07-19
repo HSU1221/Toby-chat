@@ -1,5 +1,4 @@
 const express = require('express')
-const app = express()
 const linebot = require('linebot');// 判別開發環境
 
 if (process.env.NODE_ENV !== 'production') {      // 如果不是 production 模式
@@ -23,8 +22,20 @@ bot.on('message', function (event) {
         });
 });
 
+
+const app = express()
+const linebotParser = bot.parser();
 app.post('/', linebotParser);
 
-app.listen(process.env.PORT || 3000, () => {
-    console.log('Express server start')
-});
+
+//因為 express 預設走 port 3000，而 heroku 上預設卻不是，要透過下列程式轉換
+var server = app.listen(process.env.PORT || 8080, function() {
+    var port = server.address().port;
+    console.log("App now running on port", port);
+  });
+
+
+  
+// app.listen(process.env.PORT || 3000, () => {
+//     console.log('Express server start')
+// });
