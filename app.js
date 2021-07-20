@@ -29,7 +29,7 @@ app.post('/', linebotParser);
 
 
 //因為 express 預設走 port 3000，而 heroku 上預設卻不是，要透過下列程式轉換
-var server = app.listen(process.env.PORT || 3000, function() {
+var server = app.listen(process.env.PORT || 3000, process.env.YOUR_HOST || '0.0.0.0', function() {
     var port = server.address().port;
     console.log("App now running on port", port);
   });
@@ -38,4 +38,11 @@ var server = app.listen(process.env.PORT || 3000, function() {
   
 // app.listen(process.env.PORT || 3000, () => {
 //     console.log('Express server start')
+// });
+
+
+// var server_port = process.env.YOUR_PORT || process.env.PORT || 80;
+// var server_host = process.env.YOUR_HOST || '0.0.0.0';
+// server.listen(server_port, server_host, function() {
+//     console.log('Listening on port %d', server_port);
 // });
