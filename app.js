@@ -2,15 +2,26 @@ const https = require("https")
 const express = require("express")
 const app = express()
 
-const config = require('./config.json');
-
-const TOKEN = config.channelAccessToken;
 
 
 
-const line = require('@line/bot-sdk');
 
-const client = new line.Client(config);
+
+// const config = require('./config.json');
+// const config = {
+//     "channelId": process.env.CHANNEL_ID,
+//     "channelSecret": process.env.CHANNEL_SECRET,
+//     "channelAccessToken": process.env.CHANNEL_ACCESS_TOKEN
+// };
+// const line = require('@line/bot-sdk');
+// const client = new line.Client(config);
+
+
+
+
+const lineRouter = require('./routes/line');
+//const indexRouter = require('./routes/index');
+
 
 
 
@@ -20,11 +31,15 @@ app.use(express.urlencoded({
   extended: true
 }))
 
+
+app.use('/line',lineRouter);
+//app.use('/index',indexRouter);
+
+
+/*
 app.get("/", (req, res) => {
   res.sendStatus(200)
 })
-
-
 
 app.post("/webhook", function(req, res) {
     res.send("HTTP POST request sent to the webhook URL!")
@@ -43,6 +58,10 @@ app.post("/webhook", function(req, res) {
         
     }
 })
+*/
+
+
+
 
 
 
